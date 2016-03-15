@@ -15,10 +15,16 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <link href="/css/libs.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/dropzone.css">
 
     <style>
         body {
             font-family: 'Lato';
+        }
+
+
+        img {
+            max-width: 100%;
         }
 
         .fa-btn {
@@ -83,6 +89,7 @@
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <script src="/js/libs.js"></script>
 
+    @yield('scripts.footer')
     @include('flash')
 </body>
 </html>
