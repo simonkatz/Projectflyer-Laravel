@@ -21,19 +21,30 @@ class FlyersController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the Flyers home page.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         return view('pages.home');
     }
 
+    /**
+     * Show the flyers create page.
+     * 
+     * @return Response
+     */
     public function create() {
     	return view('flyers.create');
     }
 
+    /**
+     * Save the flyer to the database.
+     * 
+     * @param  Request
+     * @return Response
+     */
     public function store(Request $request) {
     	Flyer::create($request->all());
 

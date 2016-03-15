@@ -4,6 +4,15 @@ namespace App\Http;
 
 class Flash {
 	
+	/**
+	 * Create a flash message.
+	 * 
+	 * @param  string 		$title
+	 * @param  string 		$message
+	 * @param  string 		$level
+	 * @param  string|null  $key
+	 * @return void
+	 */
 	public function create_message($title, $message, $level, $key='flash_message') {
 		session()->flash($key, [
 				'title'   => $title,
@@ -13,18 +22,47 @@ class Flash {
 		
 	}
 
+	/**
+	 * Create an info flash message.
+	 *  
+	 * @param  string $title
+	 * @param  string $message
+	 * @return void
+	 */
 	public function info($title, $message) {
 		return $this->create_message($title, $message, 'info');
 	}
 
+	/**
+	 * Create a success flash message.
+	 * 
+	 * @param  string $title
+	 * @param  string $message
+	 * @return void
+	 */
 	public function success($title, $message) {
 		return $this->create_message($title, $message, 'success');
 	}
 
+	/**
+	 * Create an error flash message.
+	 * 
+	 * @param  string $title
+	 * @param  string $message
+	 * @return void
+	 */
 	public function error($title, $message) {
 		return $this->create_message($title, $message, 'error');
 	}
 
+	/**
+	 * Create a success overlay message.
+	 * 
+	 * @param  string 	   $title
+	 * @param  string	   $message
+	 * @param  string|null $level 
+	 * @return void
+	 */
 	public function overlay($title, $message, $level='success') {
 		return $this->create_message($title, $message, $level, 'flash_message_overlay');
 	}
