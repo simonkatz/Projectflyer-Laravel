@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 
 class FlyersController extends Controller
 {
-	/**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -37,7 +37,7 @@ class FlyersController extends Controller
      * @return Response
      */
     public function create() {
-    	return view('flyers.create');
+        return view('flyers.create');
     }
 
     /**
@@ -47,10 +47,10 @@ class FlyersController extends Controller
      * @return Response
      */
     public function store(Request $request) {
-    	Flyer::create($request->all());
+        Flyer::create($request->all());
 
-    	flash()->success('Success!', 'Your Flyer has been created!');
-    	return redirect()->back();
+        flash()->success('Success!', 'Your Flyer has been created!');
+        return redirect()->back();
     }
 
     /**
@@ -62,13 +62,13 @@ class FlyersController extends Controller
      */
     public function addPhotos($zip, $street, Request $request) {
 
-    	$this->validate($request, [
-    		'photo' => 'required|mimes:jpg,jpeg,png,bmp'
-    	]);
+        $this->validate($request, [
+            'photo' => 'required|mimes:jpg,jpeg,png,bmp'
+        ]);
 
-    	$photo = Photo::fromForm($request->file('photo'));
+        $photo = Photo::fromForm($request->file('photo'));
 
-    	Flyer::locatedAt($zip, $street)->addPhoto($photo);
+        Flyer::locatedAt($zip, $street)->addPhoto($photo);
     }
 
     /**
@@ -79,8 +79,8 @@ class FlyersController extends Controller
      * @return Response
      */
     public function show($zip, $street) {
-    	$flyer = Flyer::locatedAt($zip, $street);
+        $flyer = Flyer::locatedAt($zip, $street);
 
-    	return view('flyers.show', compact('flyer'));
+        return view('flyers.show', compact('flyer'));
     }
 }
