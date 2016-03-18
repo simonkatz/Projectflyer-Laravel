@@ -8,6 +8,7 @@ use App\Flyer;
 use App\Photo;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FlyersController extends Controller
 {
@@ -16,9 +17,8 @@ class FlyersController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function __construct() {
+        $this->middleware('auth', ['except' => ['show']]);
     }
 
     /**
@@ -26,8 +26,7 @@ class FlyersController extends Controller
      *
      * @return Response
      */
-    public function index()
-    {
+    public function index() {
         return view('pages.home');
     }
 
@@ -47,10 +46,10 @@ class FlyersController extends Controller
      * @return Response
      */
     public function store(Request $request) {
-        Flyer::create($request->all());
+        $flyer = Flyer::create($request->all());
 
         flash()->success('Success!', 'Your Flyer has been created!');
-        return redirect()->back();
+        return $this->show($flyer->zip, $flyer->street);
     }
 
     /**
@@ -61,26 +60,34 @@ class FlyersController extends Controller
      * @param Request $request
      */
     public function addPhotos($zip, $street, Request $request) {
-
         $this->validate($request, [
             'photo' => 'required|mimes:jpg,jpeg,png,bmp'
         ]);
 
-        $photo = Photo::fromForm($request->file('photo'));
+        $photo = $this->makePhoto($request->file('photo'));
 
         Flyer::locatedAt($zip, $street)->addPhoto($photo);
     }
 
     /**
+     * Store the uploaded photo.
+     * 
+     * @param  UploadedFile $file 
+     * @return Photo
+     */
+    public function makePhoto(UploadedFile $file) {
+        return Photo::named($file->getClientOriginalName())->move($file);
+    }
+
+    /**
      * Display the flyer.
      * 
-     * @param string $zip
-     * @param string $street  
+     * @param  string $zip
+     * @param  string $street  
      * @return Response
      */
     public function show($zip, $street) {
         $flyer = Flyer::locatedAt($zip, $street);
-
         return view('flyers.show', compact('flyer'));
     }
 }

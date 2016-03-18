@@ -5752,7 +5752,7 @@ button.close {
 .form-control {
   height: 40px; }
 
-body {
-  padding-top: 70px; }
+.gallery__image {
+  padding-bottom: 1em; }
 
 /*# sourceMappingURL=app.css.map */
