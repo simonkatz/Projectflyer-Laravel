@@ -20,13 +20,16 @@
                     @endforeach
                 </div>
 			@endforeach
-            <form id="addPhotosForm" 
-                  action="{{ route('store_photo_path', [$flyer->zip, $flyer->street]) }}" 
-                  method="POST" 
-                  class="dropzone">
 
-                {{ csrf_field() }}
-            </form>
+            @if($user && $user->owns($flyer))
+                <form id="addPhotosForm" 
+                      action="{{ route('store_photo_path', [$flyer->zip, $flyer->street]) }}" 
+                      method="POST" 
+                      class="dropzone">
+
+                    {{ csrf_field() }}
+                </form>
+            @endif
 		</div>
 	</div>
 @stop
